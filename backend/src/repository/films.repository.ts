@@ -5,7 +5,6 @@ import { FilmDTO, ScheduledFilmDTO } from 'src/films/dto/films.dto';
 
 @Injectable()
 export class FilmsRepository {
-  
   private _transform2FilmDTO(film: IFilm): FilmDTO {
     return {
       id: film.id,
@@ -22,13 +21,13 @@ export class FilmsRepository {
 
   private _transform2SessionDTO(session: IFilmSession): ScheduledFilmDTO {
     return {
-        id: session.id,
-        datetime: session.datetime,
-        hall: session.hall,
-        rows: session.rows,
-        seats: session.seats,
-        price: session.price,
-        taken: session.taken,
+      id: session.id,
+      daytime: session.daytime,
+      hall: session.hall,
+      rows: session.rows,
+      seats: session.seats,
+      price: session.price,
+      taken: session.taken,
     };
   }
 
@@ -39,16 +38,15 @@ export class FilmsRepository {
 
   async getFilmSessions(filmId: string): Promise<ScheduledFilmDTO[] | null> {
     const film = await filmModel.findOne({ id: filmId }).exec();
-    
+
     if (film !== null) {
-      let schedules = []
-      film.schedule.forEach(schedule => {
-        schedules.push(this._transform2SessionDTO(schedule))
+      const schedules = [];
+      film.schedule.forEach((schedule) => {
+        schedules.push(this._transform2SessionDTO(schedule));
       });
-      return schedules
+      return schedules;
     }
 
-    return null
+    return null;
   }
-
 }

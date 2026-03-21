@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 export interface IFilmSession {
   id: string;
-  datetime: string;
+  daytime: string;
   hall: number;
   rows: number;
   seats: number;
@@ -28,7 +28,7 @@ const filmSessionSchema = new Schema<IFilmSession>({
     type: String,
     required: true,
   },
-  datetime: {
+  daytime: {
     type: String,
     required: true,
   },

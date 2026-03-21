@@ -33,7 +33,7 @@ export class ScheduledFilmDTO {
   @IsUUID()
   id: string;
   @IsDateString()
-  datetime: string;
+  daytime: string;
   @IsNumber()
   hall: number;
   @IsNumber()

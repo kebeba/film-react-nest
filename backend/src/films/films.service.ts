@@ -14,11 +14,13 @@ export class FilmsService {
 
   async getFilmSessions(filmId: string): Promise<ScheduledFilmsDTO> {
     const sessions = await this.filmsRepository.getFilmSessions(filmId);
-    
+
     if (sessions == null) {
-        throw new NotFoundException(`Фильм с идентификатором ${filmId} отсутствует в базе данных`)
+      throw new NotFoundException(
+        `Фильм с идентификатором ${filmId} отсутствует в базе данных`,
+      );
     }
 
-    return { total: sessions.length, items: sessions }
+    return { total: sessions.length, items: sessions };
   }
 }

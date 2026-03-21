@@ -14,6 +14,6 @@ export class FilmsController {
 
   @Get(':id/schedule')
   async getFilmSchedule(@Param('id') id: string): Promise<ScheduledFilmsDTO> {
-    return this.filmsService.getFilmSessions(id)
+    return this.filmsService.getFilmSessions(id);
   }
 }
