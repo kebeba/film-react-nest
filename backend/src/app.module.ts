@@ -15,8 +15,7 @@ import { OrderModule } from './order/order.module';
     FilmsModule,
     OrderModule,
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, 'public'),
-      serveRoot: '/content/afisha',
+      rootPath: path.join(__dirname, '..', 'public'),
       exclude: ['/api/(.*)'],
     }),
   ],
