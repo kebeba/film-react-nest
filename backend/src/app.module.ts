@@ -25,7 +25,5 @@ import { OrderModule } from './order/order.module';
       exclude: ['/api/(.*)'],
     }),
   ],
-  controllers: [FilmsController, OrderController],
-  providers: [configProvider, FilmsService, OrderService],
 })
 export class AppModule {}

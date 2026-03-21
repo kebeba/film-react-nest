@@ -34,8 +34,8 @@ export class ScheduledFilmDTO {
   id: string;
   @IsDateString()
   datetime: string;
-  @IsString()
-  hall: string;
+  @IsNumber()
+  hall: number;
   @IsNumber()
   rows: number;
   @IsNumber()
