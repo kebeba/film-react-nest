@@ -1,7 +1,7 @@
 //TODO реализовать DTO для /orders
 import { IsArray, IsDateString, IsNumber, IsUUID } from 'class-validator';
 
-export class OrderedFilmDTO {
+export class OrderRequestDTO {
   @IsUUID()
   film: string;
   @IsUUID()
@@ -14,6 +14,9 @@ export class OrderedFilmDTO {
   seat: number;
   @IsNumber()
   price: number;
+}
+
+export class OrderedFilmDTO extends OrderRequestDTO {
   @IsUUID()
   id: string;
 }

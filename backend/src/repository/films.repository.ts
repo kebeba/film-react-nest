@@ -49,4 +49,48 @@ export class FilmsRepository {
 
     return null;
   }
+
+  async getSepcifiedSession(
+    filmId: string,
+    sessionId: string,
+  ): Promise<ScheduledFilmDTO> {
+    const matchingFilm = await filmModel
+      .findOne({
+        id: filmId,
+        schedule: {
+          $elemMatch: { id: sessionId },
+        },
+      })
+      .exec();
+
+    if (matchingFilm !== null) {
+      const desiredSession = matchingFilm.schedule.find(
+        (item) => item.id == sessionId,
+      );
+      return this._transform2SessionDTO(desiredSession);
+    }
+
+    return null;
+  }
+
+  async takeSessionSeat(
+    filmId: string,
+    sessionId: string,
+    seatKey: string,
+  ): Promise<number> {
+    const changedData = await filmModel.updateOne(
+      {
+        id: filmId,
+        schedule: {
+          $elemMatch: {
+            id: sessionId,
+            taken: { $ne: seatKey },
+          },
+        },
+      },
+      { $push: { 'schedule.$.taken': seatKey } },
+    );
+
+    return changedData.modifiedCount;
+  }
 }
