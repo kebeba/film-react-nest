@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { IFilm, IFilmSession, filmModel } from './repository.models';
 import { FilmDTO, ScheduledFilmDTO } from 'src/films/dto/films.dto';
 import { FilmEntity } from 'src/films/entities/film.entity';
 import { ScheduleEntity } from 'src/films/entities/schedule.entity';
-
 
 @Injectable()
 export class FilmsRepository {
@@ -16,7 +14,7 @@ export class FilmsRepository {
     @InjectRepository(ScheduleEntity)
     private scheduleRepo: Repository<ScheduleEntity>,
   ) {}
-  
+
   private _transform2FilmDTO(film: FilmEntity): FilmDTO {
     return {
       id: film.id,
@@ -49,7 +47,10 @@ export class FilmsRepository {
   }
 
   async getFilmSessions(filmId: string): Promise<ScheduledFilmDTO[] | null> {
-    const film = await this.filmRepo.findOne({ where: { id: filmId }, relations: ['schedule'] });
+    const film = await this.filmRepo.findOne({
+      where: { id: filmId },
+      relations: ['schedule'],
+    });
 
     if (film !== null) {
       const schedules = [];
@@ -66,10 +67,10 @@ export class FilmsRepository {
     filmId: string,
     sessionId: string,
   ): Promise<ScheduledFilmDTO> {
-    const desiredSession = await this.scheduleRepo.findOne(
-      {where: {filmId: filmId, id: sessionId}}
-    )
-    
+    const desiredSession = await this.scheduleRepo.findOne({
+      where: { filmId: filmId, id: sessionId },
+    });
+
     if (desiredSession !== null) {
       return this._transform2SessionDTO(desiredSession);
     }
@@ -85,7 +86,7 @@ export class FilmsRepository {
     const changedData = await this.scheduleRepo
       .createQueryBuilder()
       .update(ScheduleEntity)
-      .set({taken: () => `taken || ',${seatKey}'`})
+      .set({ taken: () => `taken || ',${seatKey}'` })
       .where('id = :sessionId', { sessionId })
       .andWhere('filmId = :filmId', { filmId })
       .execute();
