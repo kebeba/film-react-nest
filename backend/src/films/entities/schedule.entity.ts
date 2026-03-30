@@ -22,8 +22,8 @@ export class ScheduleEntity {
   @Column('float8')
   price: number;
 
-  @Column('text')
-  taken: string;
+  @Column('text', { array: true })
+  taken: string[];
 
   @Column({ type: 'uuid', name: 'filmId' })
   filmId: string;

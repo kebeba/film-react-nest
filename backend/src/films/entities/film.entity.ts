@@ -13,8 +13,8 @@ export class FilmEntity {
   @Column('varchar')
   director: string;
 
-  @Column('text')
-  tags: string;
+  @Column('text', { array: true })
+  tags: string[];
 
   @Column('varchar')
   image: string;
@@ -31,6 +31,10 @@ export class FilmEntity {
   @Column('varchar')
   description: string;
 
-  @OneToMany(() => ScheduleEntity, (schedule) => schedule.film)
+  @OneToMany(() => ScheduleEntity, (schedule) => schedule.film, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   schedule: ScheduleEntity[];
 }

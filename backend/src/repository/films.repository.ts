@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
 
 import { FilmDTO, ScheduledFilmDTO } from 'src/films/dto/films.dto';
 import { FilmEntity } from 'src/films/entities/film.entity';
@@ -15,35 +16,9 @@ export class FilmsRepository {
     private scheduleRepo: Repository<ScheduleEntity>,
   ) {}
 
-  private _transform2FilmDTO(film: FilmEntity): FilmDTO {
-    return {
-      id: film.id,
-      rating: film.rating,
-      director: film.director,
-      tags: film.tags.split(','),
-      title: film.title,
-      about: film.about,
-      description: film.description,
-      image: film.image,
-      cover: film.cover,
-    };
-  }
-
-  private _transform2SessionDTO(session: ScheduleEntity): ScheduledFilmDTO {
-    return {
-      id: session.id,
-      daytime: session.daytime,
-      hall: session.hall,
-      rows: session.rows,
-      seats: session.seats,
-      price: session.price,
-      taken: session.taken.split(','),
-    };
-  }
-
   async getAvailableFilms(): Promise<FilmDTO[]> {
     const films = await this.filmRepo.find();
-    return films.map((film) => this._transform2FilmDTO(film));
+    return films.map((film) => plainToInstance(FilmDTO, film));
   }
 
   async getFilmSessions(filmId: string): Promise<ScheduledFilmDTO[] | null> {
@@ -55,7 +30,7 @@ export class FilmsRepository {
     if (film !== null) {
       const schedules = [];
       film.schedule.forEach((schedule) => {
-        schedules.push(this._transform2SessionDTO(schedule));
+        schedules.push(plainToInstance(ScheduledFilmDTO, schedule));
       });
       return schedules;
     }
@@ -72,7 +47,7 @@ export class FilmsRepository {
     });
 
     if (desiredSession !== null) {
-      return this._transform2SessionDTO(desiredSession);
+      return plainToInstance(ScheduledFilmDTO, desiredSession);
     }
 
     return null;
