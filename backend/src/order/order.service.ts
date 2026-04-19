@@ -52,9 +52,9 @@ export class OrderService {
 
   async processOrder(orders: OrderRequestDTO[]): Promise<OrderDTO> {
     const orderingResult = await Promise.all(
-        orders.map(async (order) => {
-            return await this.bookSession(order);
-        })
+      orders.map(async (order) => {
+        return await this.bookSession(order);
+      }),
     );
     return { total: orderingResult.length, items: orderingResult };
   }

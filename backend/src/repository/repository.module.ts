@@ -1,20 +1,13 @@
 import { Module } from '@nestjs/common';
-import mongoose from 'mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppConfig, configProvider } from 'src/app.config.provider';
 import { FilmsRepository } from './films.repository';
-
-const mongoProvider = {
-  provide: 'MONGO_CONNECTION',
-  useFactory: async (config: AppConfig) => {
-    const connection = await mongoose.connect(config.database.url);
-    return connection;
-  },
-  inject: ['CONFIG'],
-};
+import { FilmEntity } from 'src/films/entities/film.entity';
+import { ScheduleEntity } from 'src/films/entities/schedule.entity';
 
 @Module({
-  providers: [configProvider, mongoProvider, FilmsRepository],
+  imports: [TypeOrmModule.forFeature([FilmEntity, ScheduleEntity])],
+  providers: [FilmsRepository],
   exports: [FilmsRepository],
 })
 export class RepositoryModule {}
