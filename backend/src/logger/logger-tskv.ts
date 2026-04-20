@@ -6,9 +6,9 @@ import { CustomLogger } from './logger-custom';
 export class TskvLogger extends CustomLogger {
   formatMessage(level: string, message: any, ...optionalParams: any[]) {
     const loggerLine = [
-        `logLevel: ${JSON.stringify(level)}`,
-        `message: ${JSON.stringify(message)}`,
-        `params: ${JSON.stringify(optionalParams)}`
+      `logLevel: ${JSON.stringify(level)}`,
+      `message: ${JSON.stringify(message)}`,
+      `params: ${JSON.stringify(optionalParams)}`,
     ];
     return loggerLine.join('\t');
   }

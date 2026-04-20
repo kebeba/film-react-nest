@@ -2,7 +2,11 @@ import { LoggerService, LogLevel, Injectable } from '@nestjs/common';
 
 @Injectable()
 export abstract class CustomLogger implements LoggerService {
-  abstract formatMessage(level: LogLevel, message: any, ...optionalParams: any[]): void
+  abstract formatMessage(
+    level: LogLevel,
+    message: any,
+    ...optionalParams: any[]
+  ): void;
 
   log(message: any, ...optionalParams: any[]) {
     console.log(this.formatMessage('log', message, ...optionalParams));
