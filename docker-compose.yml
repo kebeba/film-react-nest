@@ -40,6 +40,7 @@ services:
       - postgres
 
   backend:
+    build: ./backend
     image: ghcr.io/kebeba/film-react-nest-backend:latest
     container_name: films-backend
     restart: unless-stopped
@@ -53,6 +54,7 @@ services:
       - postgres
 
   frontend:
+    build: ./frontend
     image: ghcr.io/kebeba/film-react-nest-frontend:latest
     container_name: films-frontend
     volumes:
