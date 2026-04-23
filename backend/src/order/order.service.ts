@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
-import { FilmsRepository } from 'src/repository/films.repository';
+import { FilmsRepository } from '../repository/films.repository';
 import { OrderedFilmDTO, OrderRequestDTO, OrderDTO } from './dto/order.dto';
 
 @Injectable()

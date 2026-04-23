@@ -6,6 +6,7 @@ import { DataSourceOptions } from 'typeorm';
 import * as path from 'node:path';
 
 import { FilmsModule } from './films/films.module';
+import { LoggerModule } from './logger/logger.module';
 import { OrderModule } from './order/order.module';
 import { FilmEntity } from './films/entities/film.entity';
 import { ScheduleEntity } from './films/entities/schedule.entity';
@@ -18,6 +19,7 @@ type DatabaseDriver = 'mongodb' | 'postgres';
       isGlobal: true,
       cache: true,
     }),
+    LoggerModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

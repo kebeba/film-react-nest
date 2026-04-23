@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
-import { FilmDTO, ScheduledFilmDTO } from 'src/films/dto/films.dto';
-import { FilmEntity } from 'src/films/entities/film.entity';
-import { ScheduleEntity } from 'src/films/entities/schedule.entity';
+import { FilmDTO, ScheduledFilmDTO } from '../films/dto/films.dto';
+import { FilmEntity } from '../films/entities/film.entity';
+import { ScheduleEntity } from '../films/entities/schedule.entity';
 
 @Injectable()
 export class FilmsRepository {
